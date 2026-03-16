@@ -1,0 +1,10 @@
+language: nodejs
+nodejs:
+  version: 18
+  pm2: true
+start: npm run pm2-start
+ports:
+  - port: 3000
+    protocol: http
+persistent_storage:
+  - path: /app/data
