@@ -130,20 +130,60 @@
         .card-image-container {
             position: relative;
             width: 100%;
-            height: 240px;
             overflow: hidden;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
-        .card-image {
+        .card-main-image-wrapper {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .card-main-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.3s ease;
         }
 
-        .site-card:hover .card-image {
+        .site-card:hover .card-main-image {
             transform: scale(1.05);
+        }
+
+        .card-thumbnails {
+            display: flex;
+            gap: 4px;
+            padding: 8px;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            overflow-x: auto;
+        }
+
+        .card-thumbnail {
+            width: 80px;
+            height: 50px;
+            flex-shrink: 0;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .card-thumbnail:hover {
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .card-thumbnail.active {
+            border-color: var(--primary);
+        }
+
+        .card-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .card-badge {
@@ -398,32 +438,65 @@
                 return;
             }
 
+            const groupedByName = {};
             Object.keys(allScreenshots).forEach(url => {
                 const screenshots = allScreenshots[url];
                 if (screenshots.length === 0) return;
 
+                const siteName = screenshots[0].siteName;
+                if (!groupedByName[siteName]) {
+                    groupedByName[siteName] = [];
+                }
+                groupedByName[siteName] = groupedByName[siteName].concat(screenshots);
+            });
+
+            const sortedNames = Object.keys(groupedByName).sort((a, b) => {
+                if (a === '阿里云百炼') return -1;
+                if (b === '阿里云百炼') return 1;
+                return a.localeCompare(b, 'zh-CN');
+            });
+
+            sortedNames.forEach(siteName => {
+                const screenshots = groupedByName[siteName];
+                screenshots.sort((a, b) => new Date(b.captureTime) - new Date(a.captureTime));
+
                 const firstItem = screenshots[0];
-                const siteName = firstItem.siteName;
 
                 const option = document.createElement('option');
-                option.value = url;
+                option.value = siteName;
                 option.textContent = siteName;
                 siteFilterEl.appendChild(option);
 
                 const card = document.createElement('div');
                 card.className = 'site-card';
-                card.dataset.url = url;
+                card.dataset.name = siteName;
+
+                let thumbnailsHtml = '';
+                const maxThumbnails = Math.min(screenshots.length, 10);
+                for (let i = 0; i < maxThumbnails; i++) {
+                    thumbnailsHtml += `
+                        <div class="card-thumbnail ${i === 0 ? 'active' : ''}" data-index="${i}">
+                            <img src="${screenshots[i].imageUrl}" alt="缩略图 ${i + 1}">
+                        </div>
+                    `;
+                }
+
                 card.innerHTML = `
                     <div class="card-image-container">
-                        <img class="card-image" src="${firstItem.imageUrl}" alt="${siteName}">
+                        <div class="card-main-image-wrapper">
+                            <img class="card-main-image" src="${firstItem.imageUrl}" alt="${siteName}">
+                        </div>
                         <span class="card-badge">${screenshots.length} 张</span>
+                        <div class="card-thumbnails">
+                            ${thumbnailsHtml}
+                        </div>
                     </div>
                     <div class="card-content">
                         <div class="card-header">
                             <h3>${siteName}</h3>
                             <span class="card-count">${screenshots.length} 截图</span>
                         </div>
-                        <div class="card-url">${url}</div>
+                        <div class="card-url">${firstItem.siteUrl}</div>
                         <div class="card-time">
                             <span class="card-time-dot"></span>
                             <span>最新：${firstItem.captureTime}</span>
@@ -431,19 +504,32 @@
                     </div>
                 `;
 
+                const mainImage = card.querySelector('.card-main-image');
+                const thumbnails = card.querySelectorAll('.card-thumbnail');
+
+                thumbnails.forEach(thumb => {
+                    thumb.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const index = parseInt(thumb.dataset.index);
+                        mainImage.src = screenshots[index].imageUrl;
+                        thumbnails.forEach(t => t.classList.remove('active'));
+                        thumb.classList.add('active');
+                    });
+                });
+
                 card.addEventListener('click', () => {
-                    currentSiteUrl = url;
-                    showCompareView(firstItem.siteName);
+                    currentSiteUrl = firstItem.siteUrl;
+                    showCompareView(siteName, groupedByName[siteName]);
                 });
 
                 sitesListEl.appendChild(card);
             });
 
             siteFilterEl.addEventListener('change', (e) => {
-                const selectedUrl = e.target.value;
+                const selectedName = e.target.value;
                 const cards = document.querySelectorAll('.site-card');
                 cards.forEach(card => {
-                    if (selectedUrl === 'all' || card.dataset.url === selectedUrl) {
+                    if (selectedName === 'all' || card.dataset.name === selectedName) {
                         card.style.display = 'flex';
                     } else {
                         card.style.display = 'none';
@@ -452,14 +538,14 @@
             });
         }
 
-        function showCompareView(siteName) {
+        function showCompareView(siteName, siteScreenshots) {
             sitesListEl.style.display = 'none';
             compareViewEl.style.display = 'block';
             backToListBtnEl.style.display = 'inline-block';
 
             compareTitleEl.textContent = `${siteName} - 对比视图`;
 
-            currentTimelineItems = allScreenshots[currentSiteUrl] || [];
+            currentTimelineItems = siteScreenshots || [];
             if (currentTimelineItems.length === 0) {
                 timelineEl.innerHTML = '<div class="loading">暂无截图数据</div>';
                 return;

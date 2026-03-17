@@ -67,6 +67,23 @@ const monitorSites = [
     name: "阿里云百炼", 
     urls: [
       "https://bailian.console.aliyun.com/",
+      "https://bailian.console.aliyun.com/cn-beijing?tab=model#/model-market",
+      "https://bailian.console.aliyun.com/cn-beijing?tab=model#/efm/model_experience_center/text",
+      "https://bailian.console.aliyun.com/cn-beijing?tab=model#/efm/model_experience_center/voice",
+      "https://bailian.console.aliyun.com/cn-beijing?tab=model#/efm/model_experience_center/vision",
+      "https://bailian.console.aliyun.com/cn-beijing?tab=model#/efm/model_experience_center/multimodal",
+      "https://bailian.console.aliyun.com/cn-beijing?tab=model#/efm/model_data",
+      "https://bailian.console.aliyun.com/cn-beijing?tab=model#/efm/model_manager",
+      "https://bailian.console.aliyun.com/cn-beijing?tab=app#/app-market/suggest",
+      "https://bailian.console.aliyun.com/cn-beijing?tab=coding-plan#/efm/index",
+      "https://bailian.console.aliyun.com/cn-beijing?tab=doc#/doc",
+      "https://bailian.console.aliyun.com/cn-beijing?tab=doc#/doc/?type=model&url=2840915",
+      "https://bailian.console.aliyun.com/cn-beijing?tab=doc#/doc/?type=model&url=2840914",
+      "https://bailian.console.aliyun.com/cn-beijing?tab=doc#/doc/?type=model&url=2840182",
+      "https://bailian.console.aliyun.com/cn-beijing?tab=api#/api",
+      "https://bailian.console.aliyun.com/cn-beijing?tab=api#/api/?type=model&url=2803795",
+      "https://bailian.console.aliyun.com/cn-beijing?tab=app#/mcp-market",
+      "https://bailian.console.aliyun.com/cn-beijing?tab=app#/plugin-market",
     ],
     description: "阿里云AI模型市场"
   },
@@ -87,19 +104,16 @@ async function takeScreenshots() {
   let browser;
   try {
     browser = await chromium.launch({ 
-      headless: true,
+      headless: false,
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',
-        '--disable-blink-features=AutomationControlled',
-        '--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
       ]
     });
     
     const context = await browser.newContext({
       viewport: viewportSize,
       ignoreHTTPSErrors: true,
-      userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     });
 
     const page = await context.newPage();
@@ -112,9 +126,11 @@ async function takeScreenshots() {
     }).replace(/\//g, '-');
 
     console.log(`===== 开始截图任务 ${captureTime} =====`);
+    console.log('请在浏览器中手动登录需要登录的网站...');
+    console.log('登录完成后，按回车键继续...');
 
     for (const site of monitorSites) {
-      console.log(`处理：${site.name}`);
+      console.log(`\n处理：${site.name}`);
       
       const siteDir = path.join(__dirname, 'data/images', site.name.replace(/\//g, '-'));
       await fs.ensureDir(siteDir);
@@ -131,10 +147,10 @@ async function takeScreenshots() {
           try {
             await page.goto(url, { 
               waitUntil: 'domcontentloaded', 
-              timeout: 45000 
+              timeout: 60000 
             });
           } catch (e) {
-            console.log(`    等待网络空闲超时，继续截图...`);
+            console.log(`    等待超时，继续截图...`);
           }
 
           await page.waitForTimeout(3000);
@@ -165,18 +181,16 @@ async function takeScreenshots() {
       }
     }
 
-    console.log(`===== 截图任务完成 =====`);
+    console.log(`\n===== 截图任务完成 =====`);
+    console.log('按 Ctrl+C 关闭浏览器...');
+
+    await new Promise(() => {});
 
   } catch (error) {
-    console.error(`❌ 截图任务异常：`, error.message);
+    console.error(`❌ 截图任务异常：`, error);
   } finally {
     if (browser) await browser.close();
   }
 }
 
-takeScreenshots().then(() => {
-  if (!process.env.TRAE_URL) process.exit(0);
-}).catch(error => {
-  console.error('截图任务失败：', error);
-  if (!process.env.TRAE_URL) process.exit(1);
-});
+takeScreenshots();
