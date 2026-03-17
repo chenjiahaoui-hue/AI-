@@ -416,13 +416,19 @@
         async function loadScreenshots() {
             try {
                 sitesListEl.innerHTML = '<div class="loading">加载中...</div>';
-                const response = await fetch('/api/screenshots');
-                const result = await response.json();
-                if (result.success) {
-                    allScreenshots = result.data;
-                } else {
-                    throw new Error(result.message);
-                }
+                const response = await fetch('/screenshots.json');
+                const data = await response.json();
+                
+                const groupedByUrl = {};
+                data.forEach(item => {
+                    if (!groupedByUrl[item.siteUrl]) {
+                        groupedByUrl[item.siteUrl] = [];
+                    }
+                    groupedByUrl[item.siteUrl].push(item);
+                    groupedByUrl[item.siteUrl].sort((a, b) => new Date(b.captureTime) - new Date(a.captureTime));
+                });
+                
+                allScreenshots = groupedByUrl;
             } catch (error) {
                 sitesListEl.innerHTML = `<div class="loading">加载失败：${error.message}</div>`;
                 console.error('加载数据失败：', error);
@@ -545,7 +551,20 @@
 
             compareTitleEl.textContent = `${siteName} - 对比视图`;
 
-            currentTimelineItems = siteScreenshots || [];
+            if (siteScreenshots) {
+                currentTimelineItems = siteScreenshots;
+            } else {
+                currentTimelineItems = [];
+                Object.values(allScreenshots).forEach(screenshots => {
+                    screenshots.forEach(item => {
+                        if (item.siteName === siteName) {
+                            currentTimelineItems.push(item);
+                        }
+                    });
+                });
+                currentTimelineItems.sort((a, b) => new Date(b.captureTime) - new Date(a.captureTime));
+            }
+            
             if (currentTimelineItems.length === 0) {
                 timelineEl.innerHTML = '<div class="loading">暂无截图数据</div>';
                 return;
