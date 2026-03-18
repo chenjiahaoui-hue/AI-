@@ -141,7 +141,7 @@ async function takeScreenshots() {
 
           await page.screenshot({ 
             path: imagePath, 
-            fullPage: true,
+            fullPage: false,
             animations: 'disabled'
           });
           console.log(`    ✅ 截图完成：${imagePath}`);
