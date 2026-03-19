@@ -1,0 +1,299 @@
+[
+  {
+    "siteName": "通义千问",
+    "siteUrl": "https://chat.qwen.ai/",
+    "description": "阿里AI对话助手",
+    "imageUrl": "/screenshots/通义千问/2026-03-18_1773804595109_page1.png",
+    "captureTime": "2026-03-18 11:29:55",
+    "resolution": "1440x900",
+    "id": 1773804601041
+  },
+  {
+    "siteName": "文心一言",
+    "siteUrl": "https://yiyan.baidu.com/",
+    "description": "百度AI对话助手",
+    "imageUrl": "/screenshots/文心一言/2026-03-18_1773804601046_page1.png",
+    "captureTime": "2026-03-18 11:29:55",
+    "resolution": "1440x900",
+    "id": 1773804605754
+  },
+  {
+    "siteName": "LiblibAI",
+    "siteUrl": "https://www.liblib.art/ai-tool/image-generator",
+    "description": "AI图像生成平台",
+    "imageUrl": "/screenshots/LiblibAI/2026-03-18_1773804605757_page1.png",
+    "captureTime": "2026-03-18 11:29:55",
+    "resolution": "1440x900",
+    "id": 1773804609367
+  },
+  {
+    "siteName": "LiblibAI",
+    "siteUrl": "https://www.liblib.art/",
+    "description": "AI图像生成平台",
+    "imageUrl": "/screenshots/LiblibAI/2026-03-18_1773804609369_page2.png",
+    "captureTime": "2026-03-18 11:29:55",
+    "resolution": "1440x900",
+    "id": 1773804612675
+  },
+  {
+    "siteName": "PAI视频生成",
+    "siteUrl": "https://pai.video/onboard",
+    "description": "阿里PAI视频生成",
+    "imageUrl": "/screenshots/PAI视频生成/2026-03-18_1773804612678_page1.png",
+    "captureTime": "2026-03-18 11:29:55",
+    "resolution": "1440x900",
+    "id": 1773804617451
+  },
+  {
+    "siteName": "PAI视频生成",
+    "siteUrl": "https://pai.video/",
+    "description": "阿里PAI视频生成",
+    "imageUrl": "/screenshots/PAI视频生成/2026-03-18_1773804617452_page2.png",
+    "captureTime": "2026-03-18 11:29:55",
+    "resolution": "1440x900",
+    "id": 1773804621138
+  },
+  {
+    "siteName": "可灵AI",
+    "siteUrl": "https://app.klingai.com/cn/omni/new?ac=1",
+    "description": "快手AI视频生成",
+    "imageUrl": "/screenshots/可灵AI/2026-03-18_1773804621139_page1.png",
+    "captureTime": "2026-03-18 11:29:55",
+    "resolution": "1440x900",
+    "id": 1773804625106
+  },
+  {
+    "siteName": "可灵AI",
+    "siteUrl": "https://app.klingai.com/",
+    "description": "快手AI视频生成",
+    "imageUrl": "/screenshots/可灵AI/2026-03-18_1773804625106_page2.png",
+    "captureTime": "2026-03-18 11:29:55",
+    "resolution": "1440x900",
+    "id": 1773804628387
+  },
+  {
+    "siteName": "Grok",
+    "siteUrl": "https://grok.com/",
+    "description": "xAI对话助手",
+    "imageUrl": "/screenshots/Grok/2026-03-18_1773804628390_page1.png",
+    "captureTime": "2026-03-18 11:29:55",
+    "resolution": "1440x900",
+    "id": 1773804632775
+  },
+  {
+    "siteName": "豆包",
+    "siteUrl": "https://www.doubao.com/",
+    "description": "字节跳动AI助手",
+    "imageUrl": "/screenshots/豆包/2026-03-18_1773804632778_page1.png",
+    "captureTime": "2026-03-18 11:29:55",
+    "resolution": "1440x900",
+    "id": 1773804637078
+  },
+  {
+    "siteName": "Midjourney",
+    "siteUrl": "https://www.midjourney.com/",
+    "description": "AI图像生成",
+    "imageUrl": "/screenshots/Midjourney/2026-03-18_1773804637080_page1.png",
+    "captureTime": "2026-03-18 11:29:55",
+    "resolution": "1440x900",
+    "id": 1773804641305
+  },
+  {
+    "siteName": "ChatGPT",
+    "siteUrl": "https://openai.com/chatgpt",
+    "description": "OpenAI对话助手",
+    "imageUrl": "/screenshots/ChatGPT/2026-03-18_1773804645290_page1.png",
+    "captureTime": "2026-03-18 11:29:55",
+    "resolution": "1440x900",
+    "id": 1773804650653
+  },
+  {
+    "siteName": "ChatGPT",
+    "siteUrl": "https://openai.com/",
+    "description": "OpenAI对话助手",
+    "imageUrl": "/screenshots/ChatGPT/2026-03-18_1773804650654_page2.png",
+    "captureTime": "2026-03-18 11:29:55",
+    "resolution": "1440x900",
+    "id": 1773804654215
+  },
+  {
+    "siteName": "通义千问",
+    "siteUrl": "https://chat.qwen.ai/",
+    "description": "阿里AI对话助手",
+    "imageUrl": "/screenshots/通义千问/2026-03-18_1773805002953_page1.png",
+    "captureTime": "2026-03-18 11:36:42",
+    "resolution": "1440x900",
+    "id": 1773805007885
+  },
+  {
+    "siteName": "文心一言",
+    "siteUrl": "https://yiyan.baidu.com/",
+    "description": "百度AI对话助手",
+    "imageUrl": "/screenshots/文心一言/2026-03-18_1773805007888_page1.png",
+    "captureTime": "2026-03-18 11:36:42",
+    "resolution": "1440x900",
+    "id": 1773805012666
+  },
+  {
+    "siteName": "阿里云百炼",
+    "siteUrl": "https://bailian.console.aliyun.com/cn-beijing?tab=model#/model-market",
+    "description": "阿里云AI模型市场",
+    "imageUrl": "/screenshots/阿里云百炼/2026-03-18_1773820643686_page1.png",
+    "captureTime": "2026-03-18 15:57:23",
+    "resolution": "1440x900",
+    "id": 1773820648211
+  },
+  {
+    "siteName": "阿里云百炼",
+    "siteUrl": "https://bailian.console.aliyun.com/cn-beijing?tab=model#/efm/model_experience_center/text",
+    "description": "阿里云AI模型市场",
+    "imageUrl": "/screenshots/阿里云百炼/2026-03-18_1773820648216_page2.png",
+    "captureTime": "2026-03-18 15:57:23",
+    "resolution": "1440x900",
+    "id": 1773820651617
+  },
+  {
+    "siteName": "阿里云百炼",
+    "siteUrl": "https://bailian.console.aliyun.com/cn-beijing?tab=model#/efm/model_experience_center/voice",
+    "description": "阿里云AI模型市场",
+    "imageUrl": "/screenshots/阿里云百炼/2026-03-18_1773820651619_page3.png",
+    "captureTime": "2026-03-18 15:57:23",
+    "resolution": "1440x900",
+    "id": 1773820654920
+  },
+  {
+    "siteName": "阿里云百炼",
+    "siteUrl": "https://bailian.console.aliyun.com/cn-beijing?tab=model#/efm/model_experience_center/vision",
+    "description": "阿里云AI模型市场",
+    "imageUrl": "/screenshots/阿里云百炼/2026-03-18_1773820654921_page4.png",
+    "captureTime": "2026-03-18 15:57:23",
+    "resolution": "1440x900",
+    "id": 1773820658010
+  },
+  {
+    "siteName": "阿里云百炼",
+    "siteUrl": "https://bailian.console.aliyun.com/cn-beijing?tab=model#/efm/model_experience_center/multimodal",
+    "description": "阿里云AI模型市场",
+    "imageUrl": "/screenshots/阿里云百炼/2026-03-18_1773820658011_page5.png",
+    "captureTime": "2026-03-18 15:57:23",
+    "resolution": "1440x900",
+    "id": 1773820661088
+  },
+  {
+    "siteName": "阿里云百炼",
+    "siteUrl": "https://bailian.console.aliyun.com/cn-beijing?tab=model#/efm/model_data",
+    "description": "阿里云AI模型市场",
+    "imageUrl": "/screenshots/阿里云百炼/2026-03-18_1773820661090_page6.png",
+    "captureTime": "2026-03-18 15:57:23",
+    "resolution": "1440x900",
+    "id": 1773820664160
+  },
+  {
+    "siteName": "阿里云百炼",
+    "siteUrl": "https://bailian.console.aliyun.com/cn-beijing?tab=model#/efm/model_manager",
+    "description": "阿里云AI模型市场",
+    "imageUrl": "/screenshots/阿里云百炼/2026-03-18_1773820664163_page7.png",
+    "captureTime": "2026-03-18 15:57:23",
+    "resolution": "1440x900",
+    "id": 1773820667232
+  },
+  {
+    "siteName": "阿里云百炼",
+    "siteUrl": "https://bailian.console.aliyun.com/cn-beijing?tab=app#/app-market/suggest",
+    "description": "阿里云AI模型市场",
+    "imageUrl": "/screenshots/阿里云百炼/2026-03-18_1773820667233_page8.png",
+    "captureTime": "2026-03-18 15:57:23",
+    "resolution": "1440x900",
+    "id": 1773820670454
+  },
+  {
+    "siteName": "阿里云百炼",
+    "siteUrl": "https://bailian.console.aliyun.com/cn-beijing?tab=coding-plan#/efm/index",
+    "description": "阿里云AI模型市场",
+    "imageUrl": "/screenshots/阿里云百炼/2026-03-18_1773820670456_page9.png",
+    "captureTime": "2026-03-18 15:57:23",
+    "resolution": "1440x900",
+    "id": 1773820673727
+  },
+  {
+    "siteName": "阿里云百炼",
+    "siteUrl": "https://bailian.console.aliyun.com/cn-beijing?tab=doc#/doc",
+    "description": "阿里云AI模型市场",
+    "imageUrl": "/screenshots/阿里云百炼/2026-03-18_1773820673729_page10.png",
+    "captureTime": "2026-03-18 15:57:23",
+    "resolution": "1440x900",
+    "id": 1773820677127
+  },
+  {
+    "siteName": "阿里云百炼",
+    "siteUrl": "https://bailian.console.aliyun.com/cn-beijing?tab=doc#/doc/?type=model&url=2840915",
+    "description": "阿里云AI模型市场",
+    "imageUrl": "/screenshots/阿里云百炼/2026-03-18_1773820677128_page11.png",
+    "captureTime": "2026-03-18 15:57:23",
+    "resolution": "1440x900",
+    "id": 1773820680217
+  },
+  {
+    "siteName": "阿里云百炼",
+    "siteUrl": "https://bailian.console.aliyun.com/cn-beijing?tab=doc#/doc/?type=model&url=2840914",
+    "description": "阿里云AI模型市场",
+    "imageUrl": "/screenshots/阿里云百炼/2026-03-18_1773820680219_page12.png",
+    "captureTime": "2026-03-18 15:57:23",
+    "resolution": "1440x900",
+    "id": 1773820683506
+  },
+  {
+    "siteName": "阿里云百炼",
+    "siteUrl": "https://bailian.console.aliyun.com/cn-beijing?tab=doc#/doc/?type=model&url=2840182",
+    "description": "阿里云AI模型市场",
+    "imageUrl": "/screenshots/阿里云百炼/2026-03-18_1773820683507_page13.png",
+    "captureTime": "2026-03-18 15:57:23",
+    "resolution": "1440x900",
+    "id": 1773820686600
+  },
+  {
+    "siteName": "阿里云百炼",
+    "siteUrl": "https://bailian.console.aliyun.com/cn-beijing?tab=api#/api",
+    "description": "阿里云AI模型市场",
+    "imageUrl": "/screenshots/阿里云百炼/2026-03-18_1773820686601_page14.png",
+    "captureTime": "2026-03-18 15:57:23",
+    "resolution": "1440x900",
+    "id": 1773820689798
+  },
+  {
+    "siteName": "阿里云百炼",
+    "siteUrl": "https://bailian.console.aliyun.com/cn-beijing?tab=api#/api/?type=model&url=2803795",
+    "description": "阿里云AI模型市场",
+    "imageUrl": "/screenshots/阿里云百炼/2026-03-18_1773820689799_page15.png",
+    "captureTime": "2026-03-18 15:57:23",
+    "resolution": "1440x900",
+    "id": 1773820692874
+  },
+  {
+    "siteName": "阿里云百炼",
+    "siteUrl": "https://bailian.console.aliyun.com/cn-beijing?tab=app#/mcp-market",
+    "description": "阿里云AI模型市场",
+    "imageUrl": "/screenshots/阿里云百炼/2026-03-18_1773820692875_page16.png",
+    "captureTime": "2026-03-18 15:57:23",
+    "resolution": "1440x900",
+    "id": 1773820696022
+  },
+  {
+    "siteName": "阿里云百炼",
+    "siteUrl": "https://bailian.console.aliyun.com/cn-beijing?tab=app#/plugin-market",
+    "description": "阿里云AI模型市场",
+    "imageUrl": "/screenshots/阿里云百炼/2026-03-18_1773820696023_page17.png",
+    "captureTime": "2026-03-18 15:57:23",
+    "resolution": "1440x900",
+    "id": 1773820699153
+  },
+  {
+    "siteName": "阿里云百炼",
+    "siteUrl": "https://bailian.console.aliyun.com/cn-beijing?tab=home#/home",
+    "description": "阿里云AI模型市场",
+    "imageUrl": "/screenshots/阿里云百炼/2026-03-18_1773820699154_page18.png",
+    "captureTime": "2026-03-18 15:57:23",
+    "resolution": "1440x900",
+    "id": 1773820702615
+  }
+]

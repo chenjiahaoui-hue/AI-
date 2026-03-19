@@ -1,3 +1,7 @@
 node_modules
 package-lock.json
 data
+test-server.js
+test.txt
+public/screenshots/*
+!public/screenshots/.gitkeep

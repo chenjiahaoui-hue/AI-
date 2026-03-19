@@ -378,6 +378,39 @@
             transform: scale(1.1);
         }
 
+        .compare-image-wrapper {
+            position: relative;
+        }
+
+        .compare-delete-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(239, 68, 68, 0.9);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        .compare-image-wrapper:hover .compare-delete-btn {
+            display: flex;
+        }
+
+        .compare-delete-btn:hover {
+            background: rgba(220, 38, 38, 1);
+            transform: scale(1.1);
+        }
+
         .view-toggle {
             display: flex;
             gap: 0.5rem;
@@ -454,8 +487,8 @@
         <div class="compare-header">
             <h2 id="compareTitle">竞品A-首页模块 - 对比视图</h2>
             <div class="view-toggle">
-                <button class="view-toggle-btn active" data-view="compare">对比视图</button>
-                <button class="view-toggle-btn" data-view="waterfall">瀑布流</button>
+                <button class="view-toggle-btn active" data-view="compare">大图</button>
+                <button class="view-toggle-btn" data-view="waterfall">双列瀑布流</button>
             </div>
             <button id="refreshCompareBtn" class="btn">刷新截图</button>
         </div>
@@ -465,16 +498,11 @@
         </div>
 
         <div id="compareGrid" class="compare-grid">
-            <div class="compare-item">
+            <div class="compare-item" style="grid-column: span 2;">
                 <div class="compare-item-header" id="compareLeftTitle">2026-03-16 09:00</div>
                 <div class="compare-image-wrapper">
+                    <button class="compare-delete-btn" id="compareDeleteBtn">×</button>
                     <img id="compareLeftImage" class="compare-image" src="" alt="截图1">
-                </div>
-            </div>
-            <div class="compare-item">
-                <div class="compare-item-header" id="compareRightTitle">2026-03-15 09:00</div>
-                <div class="compare-image-wrapper">
-                    <img id="compareRightImage" class="compare-image" src="" alt="截图2">
                 </div>
             </div>
         </div>
@@ -498,9 +526,8 @@
         const compareTitleEl = document.getElementById('compareTitle');
         const timelineEl = document.getElementById('timeline');
         const compareLeftTitleEl = document.getElementById('compareLeftTitle');
-        const compareRightTitleEl = document.getElementById('compareRightTitle');
         const compareLeftImageEl = document.getElementById('compareLeftImage');
-        const compareRightImageEl = document.getElementById('compareRightImage');
+        const compareDeleteBtn = document.getElementById('compareDeleteBtn');
         const compareGridEl = document.getElementById('compareGrid');
         const waterfallGridEl = document.getElementById('waterfallGrid');
 
@@ -513,19 +540,27 @@
         async function loadScreenshots() {
             try {
                 sitesListEl.innerHTML = '<div class="loading">加载中...</div>';
-                const response = await fetch('/screenshots.json');
+                const timestamp = Date.now();
+                const response = await fetch(`/data.json?t=${timestamp}`);
                 allData = await response.json();
+                console.log('加载到的数据数量:', allData.length);
+                console.log('阿里云百炼数据:', allData.filter(item => item.siteName === '阿里云百炼'));
                 
-                const groupedByUrl = {};
+                const groupedByName = {};
                 allData.forEach(item => {
-                    if (!groupedByUrl[item.siteUrl]) {
-                        groupedByUrl[item.siteUrl] = [];
+                    if (!groupedByName[item.siteName]) {
+                        groupedByName[item.siteName] = [];
                     }
-                    groupedByUrl[item.siteUrl].push(item);
-                    groupedByUrl[item.siteUrl].sort((a, b) => new Date(b.captureTime) - new Date(a.captureTime));
+                    groupedByName[item.siteName].push(item);
                 });
                 
-                allScreenshots = groupedByUrl;
+                Object.keys(groupedByName).forEach(siteName => {
+                    groupedByName[siteName].sort((a, b) => new Date(b.captureTime) - new Date(a.captureTime));
+                });
+                
+                allScreenshots = groupedByName;
+                console.log('按名称分组结果:', groupedByName);
+                console.log('阿里云百炼截图数量:', groupedByName['阿里云百炼'] ? groupedByName['阿里云百炼'].length : 0);
             } catch (error) {
                 sitesListEl.innerHTML = `<div class="loading">加载失败：${error.message}</div>`;
                 console.error('加载数据失败：', error);
@@ -541,27 +576,14 @@
                 return;
             }
 
-            const groupedByName = {};
-            Object.keys(allScreenshots).forEach(url => {
-                const screenshots = allScreenshots[url];
-                if (screenshots.length === 0) return;
-
-                const siteName = screenshots[0].siteName;
-                if (!groupedByName[siteName]) {
-                    groupedByName[siteName] = [];
-                }
-                groupedByName[siteName] = groupedByName[siteName].concat(screenshots);
-            });
-
-            const sortedNames = Object.keys(groupedByName).sort((a, b) => {
+            const sortedNames = Object.keys(allScreenshots).sort((a, b) => {
                 if (a === '阿里云百炼') return -1;
                 if (b === '阿里云百炼') return 1;
                 return a.localeCompare(b, 'zh-CN');
             });
 
             sortedNames.forEach(siteName => {
-                const screenshots = groupedByName[siteName];
-                screenshots.sort((a, b) => new Date(b.captureTime) - new Date(a.captureTime));
+                const screenshots = allScreenshots[siteName];
 
                 const firstItem = screenshots[0];
 
@@ -575,7 +597,7 @@
                 card.dataset.name = siteName;
 
                 let thumbnailsHtml = '';
-                const maxThumbnails = Math.min(screenshots.length, 10);
+                const maxThumbnails = screenshots.length;
                 for (let i = 0; i < maxThumbnails; i++) {
                     thumbnailsHtml += `
                         <div class="card-thumbnail ${i === 0 ? 'active' : ''}" data-index="${i}">
@@ -622,7 +644,7 @@
 
                 card.addEventListener('click', () => {
                     currentSiteUrl = firstItem.siteUrl;
-                    showCompareView(siteName, groupedByName[siteName]);
+                    showCompareView(siteName, allScreenshots[siteName]);
                 });
 
                 sitesListEl.appendChild(card);
@@ -646,20 +668,12 @@
             compareViewEl.style.display = 'block';
             backToListBtnEl.style.display = 'inline-block';
 
-            compareTitleEl.textContent = `${siteName} - 对比视图`;
+            compareTitleEl.textContent = `${siteName} - 详情页`;
 
             if (siteScreenshots) {
                 currentTimelineItems = siteScreenshots;
             } else {
-                currentTimelineItems = [];
-                Object.values(allScreenshots).forEach(screenshots => {
-                    screenshots.forEach(item => {
-                        if (item.siteName === siteName) {
-                            currentTimelineItems.push(item);
-                        }
-                    });
-                });
-                currentTimelineItems.sort((a, b) => new Date(b.captureTime) - new Date(a.captureTime));
+                currentTimelineItems = allScreenshots[siteName] || [];
             }
             
             if (currentTimelineItems.length === 0) {
@@ -677,10 +691,14 @@
                 });
             });
 
-            if (currentTimelineItems.length >= 2) {
-                setCompareImages(0, 1);
-            } else if (currentTimelineItems.length === 1) {
-                setCompareImages(0, 0);
+            compareDeleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const index = parseInt(compareDeleteBtn.dataset.index);
+                deleteScreenshot(index);
+            });
+
+            if (currentTimelineItems.length >= 1) {
+                setCompareImages(0);
             }
         }
 
@@ -715,24 +733,29 @@
                     allData.splice(originalIndex, 1);
                     currentTimelineItems.splice(index, 1);
                     
-                    const groupedByUrl = {};
+                    const groupedByName = {};
                     allData.forEach(item => {
-                        if (!groupedByUrl[item.siteUrl]) {
-                            groupedByUrl[item.siteUrl] = [];
+                        if (!groupedByName[item.siteName]) {
+                            groupedByName[item.siteName] = [];
                         }
-                        groupedByUrl[item.siteUrl].push(item);
-                        groupedByUrl[item.siteUrl].sort((a, b) => new Date(b.captureTime) - new Date(a.captureTime));
+                        groupedByName[item.siteName].push(item);
                     });
-                    allScreenshots = groupedByUrl;
+                    
+                    Object.keys(groupedByName).forEach(siteName => {
+                        groupedByName[siteName].sort((a, b) => new Date(b.captureTime) - new Date(a.captureTime));
+                    });
+                    
+                    allScreenshots = groupedByName;
                     
                     renderTimeline();
                     renderWaterfall();
                     renderSiteList();
                     
-                    if (currentTimelineItems.length >= 2) {
-                        setCompareImages(0, 1);
-                    } else if (currentTimelineItems.length === 1) {
-                        setCompareImages(0, 0);
+                    if (currentTimelineItems.length >= 1) {
+                        const newIndex = Math.min(index, currentTimelineItems.length - 1);
+                        setCompareImages(newIndex);
+                    } else {
+                        backToListView();
                     }
                 }
             }
@@ -771,33 +794,27 @@
                         el.classList.remove('active');
                     });
                     timelineItem.classList.add('active');
-                    setCompareImages(index, compareRightImageEl.dataset.index || 1);
+                    setCompareImages(index);
                 });
 
                 timelineEl.appendChild(timelineItem);
             });
         }
 
-        function setCompareImages(leftIndex, rightIndex) {
-            if (!currentTimelineItems[leftIndex]) return;
-            if (!currentTimelineItems[rightIndex]) rightIndex = leftIndex;
+        function setCompareImages(index) {
+            if (!currentTimelineItems[index]) return;
 
-            const leftItem = currentTimelineItems[leftIndex];
-            const rightItem = currentTimelineItems[rightIndex];
+            const item = currentTimelineItems[index];
 
-            compareLeftTitleEl.textContent = leftItem.captureTime;
-            compareLeftImageEl.src = leftItem.imageUrl;
-            compareLeftImageEl.alt = `${leftItem.siteName} ${leftItem.captureTime}`;
-            compareLeftImageEl.dataset.index = leftIndex;
-
-            compareRightTitleEl.textContent = rightItem.captureTime;
-            compareRightImageEl.src = rightItem.imageUrl;
-            compareRightImageEl.alt = `${rightItem.siteName} ${rightItem.captureTime}`;
-            compareRightImageEl.dataset.index = rightIndex;
+            compareLeftTitleEl.textContent = item.captureTime;
+            compareLeftImageEl.src = item.imageUrl;
+            compareLeftImageEl.alt = `${item.siteName} ${item.captureTime}`;
+            compareLeftImageEl.dataset.index = index;
+            compareDeleteBtn.dataset.index = index;
 
             document.querySelectorAll('.timeline-item').forEach(el => {
                 el.classList.remove('active');
-                if (parseInt(el.dataset.index) === leftIndex) {
+                if (parseInt(el.dataset.index) === index) {
                     el.classList.add('active');
                 }
             });
@@ -822,18 +839,6 @@
                 if (e.key === 'Escape' && compareViewEl.style.display === 'block') {
                     backToListView();
                 }
-            });
-
-            compareRightImageEl.addEventListener('click', () => {
-                const currentRightIndex = parseInt(compareRightImageEl.dataset.index || 1);
-                const nextIndex = (currentRightIndex + 1) % currentTimelineItems.length;
-                setCompareImages(parseInt(compareLeftImageEl.dataset.index || 0), nextIndex);
-            });
-
-            document.querySelectorAll('.view-toggle-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    switchView(btn.dataset.view);
-                });
             });
         }
 
